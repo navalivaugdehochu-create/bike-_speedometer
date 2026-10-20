@@ -1,0 +1,27 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: set up JDK 17
+      uses: actions/setup@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build Gradle
+      run: gradle assembleDebug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: bike-speedometer-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
